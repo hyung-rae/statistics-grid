@@ -3,3 +3,12 @@
   margin: 0;
   box-sizing: border-box;
 }
+
+.react-grid-item.react-grid-placeholder {
+  background: lightblue;
+  border-radius: 4px;
+}
+
+.react-grid-item > .react-resizable-handle {
+  opacity: 1 !important;
+}

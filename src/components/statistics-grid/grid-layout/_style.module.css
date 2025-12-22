@@ -1,0 +1,29 @@
+.grid_container {
+  position: relative;
+  min-width: 1200px;
+}
+
+.grid_layout {
+  min-height: 100vh;
+}
+
+.grid_item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.handle {
+  margin-right: auto !important;
+  cursor: grab !important;
+}
+
+.handle:active {
+  cursor: grabbing !important;
+}
+
+.content {
+  flex: 1;
+  padding-block: 5px;
+}

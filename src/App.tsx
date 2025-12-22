@@ -1,19 +1,14 @@
-import { Box, Container } from "@mui/material"
-import { grey } from "@mui/material/colors"
+import { Box } from "@mui/material"
 import "react-grid-layout/css/styles.css"
 import "react-resizable/css/styles.css"
+import GridLayout from "./components/statistics-grid/grid-layout"
 
 export default function App() {
   return (
-    <Container maxWidth={false} sx={{ pt: "70px" }}>
-      <Box
-        sx={{
-          height: "85vh",
-          border: "1px solid",
-          borderColor: grey[300],
-          borderRadius: "4px",
-        }}
-      ></Box>
-    </Container>
+    <div>
+      <Box>
+        <GridLayout />
+      </Box>
+    </div>
   )
 }
