@@ -1,100 +1,64 @@
-import DeleteIcon from "@mui/icons-material/Delete"
-import DragIndicatorIcon from "@mui/icons-material/DragIndicator"
-import LoopIcon from "@mui/icons-material/Loop"
-import { Card, IconButton, MenuItem, Select, Stack } from "@mui/material"
-import { useMemo } from "react"
-import ReactGridLayout, {
-  useContainerWidth,
-  type LayoutItem,
-} from "react-grid-layout"
-import { aspectRatio, gridBounds, minMaxSize } from "react-grid-layout/core"
-import "react-grid-layout/css/styles.css"
-import "react-resizable/css/styles.css"
-import classes from "./_style.module.css"
-import LineChart from "../../line-chart"
+import { Box, Card } from "@mui/material"
+import ReactGridLayout from "react-grid-layout"
+import CreateItemButton from "../../create-item-button"
+import GridItem from "../grid-item"
+import { GRID_COLS, GRID_PADDING } from "./_constants"
+import useGridLayout from "./_hooks/useGridLayout"
 
-export default function GridLayout() {
-  const { width, containerRef, mounted } = useContainerWidth()
+const GridLayout = () => {
+  const {
+    containerRef,
+    mounted,
+    width,
+    layout,
+    rowHeight,
+    constraints,
+    onAdd,
+    onLayoutChange,
+    onDelete,
+  } = useGridLayout()
 
-  const ratio16x9 = useMemo(() => [aspectRatio(16 / 9)], [])
-  const ratio1x1 = useMemo(() => [aspectRatio(1)], [])
-
-  const gridConstraints = useMemo(() => [gridBounds, minMaxSize], [])
-
-  const layout: LayoutItem[] = [
-    {
-      i: "a",
-      x: 0,
-      y: 0,
-      w: 5,
-      h: 9,
-      minW: 5,
-      maxW: 12,
-      maxH: 20,
-      constraints: ratio16x9,
-    },
-  ]
+  // todo
+  const onReload = () => {}
 
   return (
-    <div ref={containerRef} className={classes.grid_container}>
+    <Box
+      ref={containerRef}
+      sx={{
+        minWidth: "1200px",
+        scrollbarWidth: "thin",
+        scrollbarGutter: "stable",
+      }}
+    >
+      <CreateItemButton onAdd={onAdd} />
+
       {mounted && (
         <ReactGridLayout
-          className={classes.grid_layout}
           width={width}
           layout={layout}
-          gridConfig={{ cols: 12, rowHeight: 30, containerPadding: [50, 50] }}
+          gridConfig={{
+            cols: GRID_COLS,
+            rowHeight,
+            containerPadding: [GRID_PADDING, GRID_PADDING],
+          }}
           dragConfig={{ enabled: true, handle: "#handle" }}
-          constraints={gridConstraints}
+          constraints={constraints}
+          style={{ minHeight: "100vh" }}
+          onLayoutChange={onLayoutChange}
         >
           {layout.map((item) => (
-            <Card variant="outlined" key={item.i} className={classes.grid_item}>
-              <Stack
-                direction="row"
-                spacing={1}
-                sx={{ justifyContent: "flex-end" }}
-              >
-                <IconButton
-                  id="handle"
-                  aria-label="delete"
-                  size="small"
-                  className={classes.handle}
-                >
-                  <DragIndicatorIcon fontSize="inherit" />
-                </IconButton>
-
-                <IconButton aria-label="delete" size="small">
-                  <LoopIcon fontSize="inherit" />
-                </IconButton>
-
-                <IconButton aria-label="delete" size="small">
-                  <DeleteIcon fontSize="inherit" />
-                </IconButton>
-              </Stack>
-
-              <div className={classes.content}>
-                <LineChart />
-              </div>
-
-              <Stack
-                direction="row"
-                spacing={1}
-                sx={{ justifyContent: "flex-end" }}
-              >
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={10}
-                  size="small"
-                >
-                  <MenuItem value={10}>Line</MenuItem>
-                  <MenuItem value={20}>Bar</MenuItem>
-                  <MenuItem value={30}>Column</MenuItem>
-                </Select>
-              </Stack>
+            <Card variant="outlined" key={item.i}>
+              <GridItem
+                {...item}
+                onDelete={() => onDelete(item.i)}
+                onReload={onReload}
+              />
             </Card>
           ))}
         </ReactGridLayout>
       )}
-    </div>
+    </Box>
   )
 }
+
+export default GridLayout
