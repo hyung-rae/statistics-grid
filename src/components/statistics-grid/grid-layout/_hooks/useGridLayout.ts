@@ -20,6 +20,7 @@ interface UseGridLayoutResult
   onAdd: (i: string, minW: number, minH: number) => void
   onLayoutChange: (newLayout: Layout) => void
   onDelete: (id: string) => void
+  onChangeType: (preId: string, nextId: string) => void
 }
 
 const useGridLayout = (): UseGridLayoutResult => {
@@ -50,6 +51,12 @@ const useGridLayout = (): UseGridLayoutResult => {
     setLayout((pre) => [...pre, item])
   }
 
+  const onChangeType = (preId: string, nextId: string) => {
+    setLayout((pre) =>
+      pre.map((item) => (item.i === preId ? { ...item, i: nextId } : item))
+    )
+  }
+
   const onDelete = (id: string) => {
     const filterItems = layout.filter((item) => item.i !== id)
     setLayout(filterItems)
@@ -65,6 +72,7 @@ const useGridLayout = (): UseGridLayoutResult => {
     onAdd,
     onLayoutChange,
     onDelete,
+    onChangeType,
   }
 }
 

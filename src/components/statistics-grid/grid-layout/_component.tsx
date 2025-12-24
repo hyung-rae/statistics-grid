@@ -16,6 +16,7 @@ const GridLayout = () => {
     onAdd,
     onLayoutChange,
     onDelete,
+    onChangeType,
   } = useGridLayout()
 
   // todo
@@ -53,6 +54,7 @@ const GridLayout = () => {
               <GridItem
                 {...item}
                 onDelete={() => onDelete(item.i)}
+                onChangeType={onChangeType}
                 onReload={onReload}
               />
             </Card>
