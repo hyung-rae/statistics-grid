@@ -9,11 +9,7 @@ import type { CreateItemButtonProps } from "./_types"
 
 const CreateContentButton = ({ onAdd }: CreateItemButtonProps) => {
   const handleClick = (type: ContentType) => {
-    const id =
-      type === "chart"
-        ? createContentId(type, "line")
-        : createContentId(type, "default")
-
+    const id = createContentId(type)
     onAdd(id, CONTENT_CONFIG[type].minW || 1, CONTENT_CONFIG[type].minH || 1)
   }
 

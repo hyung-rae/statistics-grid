@@ -1,20 +1,22 @@
 // 기본 컨텐츠 타입
-export const CONTENT_TYPES = ["chart", "table", "feed"] as const
+export const CONTENT_TYPES = [
+  "series",
+  "distribution",
+  "table",
+  "feed",
+] as const
 export type ContentType = (typeof CONTENT_TYPES)[number]
 
-// 차트 타입 정의
-export const CHART_TYPES = ["line", "bar", "pie"] as const
-export type ChartType = (typeof CHART_TYPES)[number]
+// 차트 그룹 타입
+export const CHART_GROUPS = {
+  series: ["line", "bar", "area", "column"] as const, // 시계열/다중 시리즈
+  distribution: ["pie", "donut", "radialBar"] as const, // 분포/비율
+  table: ["default"] as const, // 테이블
+  feed: ["default"] as const, // 피드
+} as const
 
-// 각 컨텐츠 타입별 서브타입
-export type ContentSubType = {
-  chart: ChartType
-  table: "default"
-  feed: "default"
-}
-
-// 컨텐츠 ID 파싱 결과
-export interface ParsedContentId {
+// parsing content id 결과값
+export type ParsedContentId = {
   type: ContentType
   subType: string
   uuid: string

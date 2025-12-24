@@ -18,10 +18,6 @@ const options: ApexOptions = {
   stroke: {
     curve: "smooth",
   },
-  title: {
-    text: "Average High & Low Temperature",
-    align: "left",
-  },
   grid: {
     borderColor: "#e7e7e7",
     row: {
@@ -49,7 +45,7 @@ const options: ApexOptions = {
     position: "top",
     horizontalAlign: "right",
     floating: true,
-    offsetY: -25,
+
     offsetX: -5,
   },
 }

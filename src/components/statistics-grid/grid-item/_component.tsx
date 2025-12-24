@@ -1,16 +1,39 @@
-import LineChart from "@/components/line-chart"
+import FeedData from "@/components/contents/feed-data"
+import LineChart from "@/components/contents/line-chart"
+import PieChart from "@/components/contents/pie-chart"
+import TableData from "@/components/contents/table-data"
+import Select from "@/components/select"
+import type { ContentType } from "@/types"
+import { parseContentId } from "@/utils"
 import DeleteIcon from "@mui/icons-material/Delete"
 import DragIndicatorIcon from "@mui/icons-material/DragIndicator"
 import LoopIcon from "@mui/icons-material/Loop"
-import { Box, IconButton, MenuItem, Select, Stack } from "@mui/material"
+import { Box, IconButton, Stack } from "@mui/material"
+import type { ComponentType } from "react"
 import type { LayoutItem } from "react-grid-layout"
+import useSelectData from "./_hooks/useSelectData"
+
+const CONTENT_COMPONENTS: Record<ContentType, ComponentType> = {
+  series: LineChart,
+  distribution: PieChart,
+  table: TableData,
+  feed: FeedData,
+}
+
+const renderContent = (type: ContentType) => {
+  const ContentComponent = CONTENT_COMPONENTS[type]
+  return <ContentComponent />
+}
 
 export interface GridItemProps extends LayoutItem {
   onDelete: () => void
   onReload: () => void
 }
 
-const GridItem = ({ onDelete, onReload }: GridItemProps) => {
+const GridItem = ({ i, onDelete, onReload }: GridItemProps) => {
+  const { type } = parseContentId(i)
+  const { data, dataList, handleChangeData } = useSelectData(type)
+
   return (
     <Box
       sx={{
@@ -21,25 +44,31 @@ const GridItem = ({ onDelete, onReload }: GridItemProps) => {
         padding: "10px",
       }}
     >
-      <Stack direction="row" spacing={1} sx={{ justifyContent: "flex-end" }}>
-        <IconButton
-          id="handle"
-          size="small"
-          sx={{
-            mr: "auto !important",
-            cursor: "grab !important",
-          }}
-        >
+      <Stack
+        direction="row"
+        sx={{
+          justifyContent: "space-between",
+          alignItems: "center",
+          minWidth: 0,
+        }}
+      >
+        <IconButton id="handle" size="small" sx={{ cursor: "grab !important" }}>
           <DragIndicatorIcon fontSize="inherit" />
         </IconButton>
 
-        <IconButton size="small" onClick={onReload}>
-          <LoopIcon fontSize="inherit" />
-        </IconButton>
+        <Box sx={{ flex: 1, maxWidth: "500px", minWidth: 0, px: "10px" }}>
+          <Select value={data} options={dataList} onChange={handleChangeData} />
+        </Box>
 
-        <IconButton size="small" onClick={onDelete}>
-          <DeleteIcon fontSize="inherit" />
-        </IconButton>
+        <Stack direction="row">
+          <IconButton size="small" onClick={onReload}>
+            <LoopIcon fontSize="inherit" />
+          </IconButton>
+
+          <IconButton size="small" onClick={onDelete}>
+            <DeleteIcon fontSize="inherit" />
+          </IconButton>
+        </Stack>
       </Stack>
 
       <Stack
@@ -51,24 +80,7 @@ const GridItem = ({ onDelete, onReload }: GridItemProps) => {
           py: "5px",
         }}
       >
-        <LineChart />
-      </Stack>
-
-      <Stack
-        direction="row"
-        spacing={1}
-        sx={{ justifyContent: "space-between" }}
-      >
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={10}
-          size="small"
-        >
-          <MenuItem value={10}>Line</MenuItem>
-          <MenuItem value={20}>Bar</MenuItem>
-          <MenuItem value={30}>Column</MenuItem>
-        </Select>
+        {renderContent(type)}
       </Stack>
     </Box>
   )
