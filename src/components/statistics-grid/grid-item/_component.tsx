@@ -1,3 +1,4 @@
+import LineChart from "@/components/line-chart"
 import DeleteIcon from "@mui/icons-material/Delete"
 import DragIndicatorIcon from "@mui/icons-material/DragIndicator"
 import LoopIcon from "@mui/icons-material/Loop"
@@ -50,7 +51,7 @@ const GridItem = ({ onDelete, onReload }: GridItemProps) => {
           py: "5px",
         }}
       >
-        {/* 콘텐측 영역 */}
+        <LineChart />
       </Stack>
 
       <Stack

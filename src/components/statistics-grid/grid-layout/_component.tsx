@@ -1,7 +1,7 @@
+import CreateContentButton from "@/components/create-content-button"
+import GridItem from "@/components/statistics-grid/grid-item"
 import { Box, Card } from "@mui/material"
 import ReactGridLayout from "react-grid-layout"
-import CreateItemButton from "../../create-item-button"
-import GridItem from "../grid-item"
 import { GRID_COLS, GRID_PADDING } from "./_constants"
 import useGridLayout from "./_hooks/useGridLayout"
 
@@ -26,11 +26,13 @@ const GridLayout = () => {
       ref={containerRef}
       sx={{
         minWidth: "1200px",
+        height: "100vh",
+        overflowY: "scroll",
         scrollbarWidth: "thin",
         scrollbarGutter: "stable",
       }}
     >
-      <CreateItemButton onAdd={onAdd} />
+      <CreateContentButton onAdd={onAdd} />
 
       {mounted && (
         <ReactGridLayout
