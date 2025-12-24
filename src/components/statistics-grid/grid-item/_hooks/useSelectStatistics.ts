@@ -18,13 +18,13 @@ const MOCK_DATA_LIST: (SelectOptionType & { type: ContentType })[] = [
   { value: "111", label: "오늘 신규 방문자 수", type: "feed" },
 ]
 
-interface UseSelectDataResult {
+interface UseSelectStatisticsResult {
   data: string | undefined
   handleChangeData: (event: SelectChangeEvent) => void
   dataList: SelectOptionType[]
 }
 
-const useSelectData = (type: ContentType): UseSelectDataResult => {
+const useSelectStatistics = (type: ContentType): UseSelectStatisticsResult => {
   const [data, setData] = useState<string | undefined>()
 
   const handleChangeData = (event: SelectChangeEvent) => {
@@ -48,4 +48,4 @@ const useSelectData = (type: ContentType): UseSelectDataResult => {
   }
 }
 
-export default useSelectData
+export default useSelectStatistics

@@ -11,7 +11,7 @@ import LoopIcon from "@mui/icons-material/Loop"
 import { Box, IconButton, Stack } from "@mui/material"
 import type { ComponentType } from "react"
 import type { LayoutItem } from "react-grid-layout"
-import useSelectData from "./_hooks/useSelectData"
+import useSelectStatistics from "./_hooks/useSelectStatistics"
 
 const CONTENT_COMPONENTS: Record<ContentType, ComponentType> = {
   series: LineChart,
@@ -32,7 +32,7 @@ export interface GridItemProps extends LayoutItem {
 
 const GridItem = ({ i, onDelete, onReload }: GridItemProps) => {
   const { type } = parseContentId(i)
-  const { data, dataList, handleChangeData } = useSelectData(type)
+  const { data, dataList, handleChangeData } = useSelectStatistics(type)
 
   return (
     <Box
