@@ -1,9 +1,9 @@
-import type { ContentType } from "@/types"
+import type { ContentType, CustomLayoutItem } from "@/types"
 import type { ComponentType } from "react"
 import type { SvgIconProps } from "@mui/material"
 
 export interface CreateItemButtonProps {
-  onAdd: (i: string, minW: number, minH: number) => void
+  onAdd: (content: CustomLayoutItem) => void
 }
 
 export type Actions = {

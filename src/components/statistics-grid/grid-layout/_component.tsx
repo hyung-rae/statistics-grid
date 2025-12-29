@@ -3,7 +3,7 @@ import GridItem from "@/components/statistics-grid/grid-item"
 import { Box, Card } from "@mui/material"
 import ReactGridLayout from "react-grid-layout"
 import { GRID_COLS, GRID_PADDING } from "./_constants"
-import useGridLayout from "./_hooks/useGridLayout"
+import useHandleGrid from "./_hooks/useHandleGrid"
 
 const GridLayout = () => {
   const {
@@ -13,11 +13,11 @@ const GridLayout = () => {
     layout,
     rowHeight,
     constraints,
-    onAdd,
     onLayoutChange,
-    onDelete,
-    onChangeType,
-  } = useGridLayout()
+    onAddContent,
+    onDeleteContent,
+    onChangeContent,
+  } = useHandleGrid()
 
   // todo
   const onReload = () => {}
@@ -33,7 +33,7 @@ const GridLayout = () => {
         scrollbarGutter: "stable",
       }}
     >
-      <CreateContentButton onAdd={onAdd} />
+      <CreateContentButton onAdd={onAddContent} />
 
       {mounted && (
         <ReactGridLayout
@@ -53,8 +53,8 @@ const GridLayout = () => {
             <Card variant="outlined" key={item.i}>
               <GridItem
                 {...item}
-                onDelete={() => onDelete(item.i)}
-                onChangeType={onChangeType}
+                onDelete={() => onDeleteContent(item.i)}
+                onChangeType={onChangeContent}
                 onReload={onReload}
               />
             </Card>

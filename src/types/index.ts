@@ -1,2 +1,2 @@
-export * from "./content.type"
-export * from "./select.type"
+export * from "./content.types"
+export * from "./select.types"

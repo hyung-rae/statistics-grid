@@ -1,5 +1,5 @@
-import type { ContentType } from "@/types"
-import { createContentId } from "@/utils"
+import type { ContentType, CustomLayoutItem } from "@/types"
+import { createContentId, getInitSubType } from "@/utils"
 import Box from "@mui/material/Box"
 import SpeedDial from "@mui/material/SpeedDial"
 import SpeedDialAction from "@mui/material/SpeedDialAction"
@@ -9,8 +9,15 @@ import type { CreateItemButtonProps } from "./_types"
 
 const CreateContentButton = ({ onAdd }: CreateItemButtonProps) => {
   const handleClick = (type: ContentType) => {
-    const id = createContentId(type)
-    onAdd(id, CONTENT_CONFIG[type].minW || 1, CONTENT_CONFIG[type].minH || 1)
+    const content = {
+      i: createContentId(),
+      w: CONTENT_CONFIG[type].minW,
+      h: CONTENT_CONFIG[type].minH,
+      type,
+      subType: getInitSubType(type),
+    } as CustomLayoutItem
+
+    onAdd(content)
   }
 
   return (

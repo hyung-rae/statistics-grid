@@ -1,74 +1,43 @@
-import BarChart from "@/components/contents/bar-chart"
-import CircleChart from "@/components/contents/circle-chart"
-import ColumnChart from "@/components/contents/column-chart"
-import DonutChart from "@/components/contents/donut-chart"
-import FeedData from "@/components/contents/feed-data"
-import LineChart from "@/components/contents/line-chart"
-import PieChart from "@/components/contents/pie-chart"
-import TableData from "@/components/contents/table-data"
+import Contents from "@/components/contents"
 import Select from "@/components/select"
-import type { CHART_GROUPS, ContentSubType, ContentType } from "@/types"
-import { parseContentId } from "@/utils"
+import { CONTENTS, type CustomLayoutItem } from "@/types"
 import DeleteIcon from "@mui/icons-material/Delete"
 import DragIndicatorIcon from "@mui/icons-material/DragIndicator"
 import LoopIcon from "@mui/icons-material/Loop"
-import { Box, IconButton, Stack } from "@mui/material"
-import { useState, type ComponentType } from "react"
-import type { LayoutItem } from "react-grid-layout"
+import { Box, IconButton, Stack, type SelectChangeEvent } from "@mui/material"
+import { useMemo } from "react"
 import useSelectStatistics from "./_hooks/useSelectStatistics"
-import type { SelectChangeEvent } from "node_modules/@mui/material"
 
-type ContentComponents = {
-  [K in keyof typeof CHART_GROUPS]: {
-    [S in (typeof CHART_GROUPS)[K][number]]: ComponentType
-  }
-}
-
-const CONTENT_COMPONENTS: ContentComponents = {
-  series: {
-    line: LineChart,
-    bar: BarChart,
-    column: ColumnChart,
-  },
-  distribution: {
-    pie: PieChart,
-    donut: DonutChart,
-    circle: CircleChart,
-  },
-  table: {
-    default: TableData,
-  },
-  feed: {
-    default: FeedData,
-  },
-}
-
-const renderContent = <T extends ContentType>(
-  type: T,
-  subType: (typeof CHART_GROUPS)[T][number]
-) => {
-  const ContentComponent = CONTENT_COMPONENTS[type][
-    subType as keyof (typeof CONTENT_COMPONENTS)[T]
-  ] as ComponentType
-  return <ContentComponent />
-}
-
-export interface GridItemProps extends LayoutItem {
+export type GridItemProps = CustomLayoutItem & {
   onDelete: () => void
   onReload: () => void
-  onChangeType: (preId: string, nextId: string) => void
+  onChangeType: (
+    targetId: string,
+    updateInfo: Partial<CustomLayoutItem>
+  ) => void
 }
 
-const GridItem = ({ i, onDelete, onReload, onChangeType }: GridItemProps) => {
-  const { type, subType, uuid } = parseContentId(i)
+const GridItem = ({
+  i,
+  type,
+  subType,
+  onDelete,
+  onReload,
+  onChangeType,
+}: GridItemProps) => {
   const { data, dataList, handleChangeData } = useSelectStatistics(type)
 
-  const [chart, setChart] = useState(subType)
-  const handleChangeChart = (event: SelectChangeEvent) => {
-    setChart(event.target.value as ContentSubType)
+  const chartList = useMemo(() => {
+    return CONTENTS[type].map((item) => ({
+      value: item,
+      label: item,
+    }))
+  }, [type])
 
-    const nextId = `${type}:${event.target.value}:${uuid}`
-    onChangeType(i, nextId)
+  const handleChangeContent = (event: SelectChangeEvent) => {
+    onChangeType(i, {
+      subType: event.target.value as typeof subType,
+    })
   }
 
   return (
@@ -117,29 +86,18 @@ const GridItem = ({ i, onDelete, onReload, onChangeType }: GridItemProps) => {
           py: "5px",
         }}
       >
-        {renderContent(type, subType)}
+        <Contents type={type} subType={subType} />
       </Stack>
 
-      <Box sx={{ width: "100px", ml: "auto" }}>
-        <Select
-          value={chart}
-          options={[
-            {
-              value: "line",
-              label: "line",
-            },
-            {
-              value: "column",
-              label: "column",
-            },
-            {
-              value: "bar",
-              label: "bar",
-            },
-          ]}
-          onChange={handleChangeChart}
-        />
-      </Box>
+      {["series", "distribution"].includes(type) && (
+        <Box sx={{ width: "100px", ml: "auto" }}>
+          <Select
+            value={subType}
+            options={chartList}
+            onChange={handleChangeContent}
+          />
+        </Box>
+      )}
     </Box>
   )
 }

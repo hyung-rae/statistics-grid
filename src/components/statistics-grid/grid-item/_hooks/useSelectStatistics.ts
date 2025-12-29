@@ -32,11 +32,10 @@ const useSelectStatistics = (type: ContentType): UseSelectStatisticsResult => {
   }
 
   const dataList = useMemo(() => {
-    return MOCK_DATA_LIST.map((item) => {
+    return MOCK_DATA_LIST.filter((item) => item.type === type).map((item) => {
       return {
         value: item.value,
         label: item.label,
-        disabled: item.type !== type,
       }
     })
   }, [type])
