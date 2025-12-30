@@ -1,8 +1,6 @@
 import CreateContentButton from "@/components/create-content-button"
 import GridItem from "@/components/statistics-grid/grid-item"
-import { getStatisticsList } from "@/services/statisticsServices"
 import { Box, Card } from "@mui/material"
-import { useQuery } from "@tanstack/react-query"
 import ReactGridLayout from "react-grid-layout"
 import { GRID_COLS, GRID_PADDING } from "./_constants"
 import useHandleGrid from "./_hooks/useHandleGrid"
@@ -20,16 +18,6 @@ const GridLayout = () => {
     onDeleteContent,
     onChangeContent,
   } = useHandleGrid()
-
-  const { data } = useQuery({
-    queryKey: ["statistics"],
-    queryFn: getStatisticsList,
-  })
-
-  // todo
-  const onReload = async () => {}
-
-  console.log(data)
 
   return (
     <Box
@@ -64,7 +52,6 @@ const GridLayout = () => {
                 {...item}
                 onDelete={() => onDeleteContent(item.i)}
                 onChangeType={onChangeContent}
-                onReload={onReload}
               />
             </Card>
           ))}

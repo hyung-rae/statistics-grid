@@ -1,104 +1,88 @@
+import ConfirmDialog from "@/components/confirm-dialog"
 import Contents from "@/components/contents"
-import Select from "@/components/select"
-import { CONTENTS, type CustomLayoutItem } from "@/types"
-import DeleteIcon from "@mui/icons-material/Delete"
+import SettingDialog from "@/components/setting-dialog"
+import { type CustomLayoutItem } from "@/types"
+import CloseIcon from "@mui/icons-material/Close"
 import DragIndicatorIcon from "@mui/icons-material/DragIndicator"
-import LoopIcon from "@mui/icons-material/Loop"
-import { Box, IconButton, Stack, type SelectChangeEvent } from "@mui/material"
-import { useMemo } from "react"
-import useSelectStatistics from "./_hooks/useSelectStatistics"
+import SettingsIcon from "@mui/icons-material/Settings"
+import { Box, IconButton, Stack } from "@mui/material"
+import { useState } from "react"
 
 export type GridItemProps = CustomLayoutItem & {
   onDelete: () => void
-  onReload: () => void
   onChangeType: (
     targetId: string,
     updateInfo: Partial<CustomLayoutItem>
   ) => void
 }
 
-const GridItem = ({
-  i,
-  type,
-  subType,
-  onDelete,
-  onReload,
-  onChangeType,
-}: GridItemProps) => {
-  const { data, dataList, handleChangeData } = useSelectStatistics(type)
-
-  const chartList = useMemo(() => {
-    return CONTENTS[type].map((item) => ({
-      value: item,
-      label: item,
-    }))
-  }, [type])
-
-  const handleChangeContent = (event: SelectChangeEvent) => {
-    onChangeType(i, {
-      subType: event.target.value as typeof subType,
-    })
-  }
+const GridItem = ({ type, subType, onDelete }: GridItemProps) => {
+  const [openDeleteConfirm, setOpenDeleteConfirm] = useState(false)
+  const [openSettingDialog, setOpenSettingDialog] = useState(false)
 
   return (
-    <Box
-      sx={{
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        padding: "10px",
-      }}
-    >
-      <Stack
-        direction="row"
+    <>
+      <SettingDialog
+        open={openSettingDialog}
+        close={() => setOpenSettingDialog(false)}
+      />
+
+      <ConfirmDialog
+        title="Are you sure you want to delete this content?"
+        content="Once deleted, it cannot be recovered."
+        open={openDeleteConfirm}
+        close={() => setOpenDeleteConfirm(false)}
+        confirm={onDelete}
+      />
+
+      <Box
         sx={{
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
           justifyContent: "space-between",
-          alignItems: "center",
-          minWidth: 0,
+          padding: "10px",
         }}
       >
-        <IconButton id="handle" size="small" sx={{ cursor: "grab !important" }}>
-          <DragIndicatorIcon fontSize="inherit" />
-        </IconButton>
-
-        <Box sx={{ flex: 1, maxWidth: "500px", minWidth: 0, px: "10px" }}>
-          <Select value={data} options={dataList} onChange={handleChangeData} />
-        </Box>
-
-        <Stack direction="row">
-          <IconButton size="small" onClick={onReload}>
-            <LoopIcon fontSize="inherit" />
+        <Stack direction="row" sx={{ justifyContent: "space-between" }}>
+          <IconButton
+            id="handle"
+            size="small"
+            sx={{
+              cursor: "grab !important",
+              "&:active": { cursor: "grabbing !important" },
+            }}
+          >
+            <DragIndicatorIcon fontSize="inherit" />
           </IconButton>
 
-          <IconButton size="small" onClick={onDelete}>
-            <DeleteIcon fontSize="inherit" />
+          <IconButton size="small" onClick={() => setOpenDeleteConfirm(true)}>
+            <CloseIcon fontSize="inherit" />
           </IconButton>
         </Stack>
-      </Stack>
 
-      <Stack
-        direction="column"
-        sx={{
-          justifyContent: "center",
-          alignItems: "center",
-          flex: 1,
-          py: "5px",
-        }}
-      >
-        <Contents type={type} subType={subType} />
-      </Stack>
+        <Stack
+          direction="column"
+          sx={{
+            justifyContent: "center",
+            alignItems: "center",
+            flex: 1,
+            py: "5px",
+          }}
+        >
+          <Contents type={type} subType={subType} />
+        </Stack>
 
-      {["series", "distribution"].includes(type) && (
-        <Box sx={{ width: "100px", ml: "auto" }}>
-          <Select
-            value={subType}
-            options={chartList}
-            onChange={handleChangeContent}
-          />
-        </Box>
-      )}
-    </Box>
+        <Stack direction="row" sx={{ justifyContent: "flex-end" }}>
+          <IconButton size="small">
+            <SettingsIcon
+              fontSize="inherit"
+              onClick={() => setOpenSettingDialog(true)}
+            />
+          </IconButton>
+        </Stack>
+      </Box>
+    </>
   )
 }
 

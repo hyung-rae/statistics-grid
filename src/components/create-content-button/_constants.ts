@@ -24,8 +24,8 @@ export const CONTENT_CONFIG: ContentConfig = {
 }
 
 export const ACTIONS: Actions[] = [
-  { icon: StackedBarChartIcon, type: "series", label: "시리즈형 차트" },
-  { icon: PieChartIcon, type: "distribution", label: "분포형 차트" },
-  { icon: TableChartIcon, type: "table", label: "테이블" },
-  { icon: FeedIcon, type: "feed", label: "피드" },
+  { icon: StackedBarChartIcon, type: "series", label: "series" },
+  { icon: PieChartIcon, type: "distribution", label: "distribution" },
+  { icon: TableChartIcon, type: "table", label: "table" },
+  { icon: FeedIcon, type: "feed", label: "feed" },
 ]
