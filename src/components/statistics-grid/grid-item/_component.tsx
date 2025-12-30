@@ -4,7 +4,6 @@ import SettingDialog from "@/components/setting-dialog"
 import { type CustomLayoutItem } from "@/types"
 import CloseIcon from "@mui/icons-material/Close"
 import DragIndicatorIcon from "@mui/icons-material/DragIndicator"
-import SettingsIcon from "@mui/icons-material/Settings"
 import { Box, IconButton, Stack } from "@mui/material"
 import { useState } from "react"
 
@@ -16,7 +15,7 @@ export type GridItemProps = CustomLayoutItem & {
   ) => void
 }
 
-const GridItem = ({ type, subType, onDelete }: GridItemProps) => {
+const GridItem = ({ subType, onDelete }: GridItemProps) => {
   const [openDeleteConfirm, setOpenDeleteConfirm] = useState(false)
   const [openSettingDialog, setOpenSettingDialog] = useState(false)
 
@@ -70,17 +69,10 @@ const GridItem = ({ type, subType, onDelete }: GridItemProps) => {
             py: "5px",
           }}
         >
-          <Contents type={type} subType={subType} />
+          <Contents subType={subType} data={[]} />
         </Stack>
 
-        <Stack direction="row" sx={{ justifyContent: "flex-end" }}>
-          <IconButton size="small">
-            <SettingsIcon
-              fontSize="inherit"
-              onClick={() => setOpenSettingDialog(true)}
-            />
-          </IconButton>
-        </Stack>
+        <Stack direction="row" sx={{ justifyContent: "flex-end" }}></Stack>
       </Box>
     </>
   )

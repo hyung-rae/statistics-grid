@@ -24,7 +24,7 @@ const useHandleGrid = () => {
     setLayout((preLayout) => {
       const merged = newLayout.map((newItem) => {
         const preItem = preLayout.find((item) => item.i === newItem.i)
-        return preItem ? { ...preItem, ...newItem } : newItem
+        return preItem ? { ...newItem, ...preItem } : newItem
       })
 
       return merged as CustomLayoutItem[]
@@ -35,6 +35,11 @@ const useHandleGrid = () => {
   const onAddContent = (content: CustomLayoutItem) => {
     content.x = layout.length % GRID_COLS
     content.y = Infinity
+
+    if (content.type === "feed") {
+      content.isResizable = false
+    }
+
     setLayout((pre) => [...pre, content])
   }
 
