@@ -19,7 +19,7 @@ const CustomSelect = ({
       return options.find((option) => option.value === selected)?.label
     }
 
-    return <span style={{ opacity: 0.5 }}>{placeholder || "선택"}</span>
+    return <span style={{ opacity: 0.5 }}>{placeholder || "Select"}</span>
   }
 
   return (
