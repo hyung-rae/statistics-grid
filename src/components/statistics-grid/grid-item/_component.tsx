@@ -9,13 +9,13 @@ import { useState } from "react"
 
 export type GridItemProps = CustomLayoutItem & {
   onDelete: () => void
-  onChangeType: (
+  onChangeContent: (
     targetId: string,
     updateInfo: Partial<CustomLayoutItem>
   ) => void
 }
 
-const GridItem = ({ subType, onDelete }: GridItemProps) => {
+const GridItem = ({ subType, onDelete, onChangeContent }: GridItemProps) => {
   const [openDeleteConfirm, setOpenDeleteConfirm] = useState(false)
   const [openSettingDialog, setOpenSettingDialog] = useState(false)
 
@@ -69,7 +69,7 @@ const GridItem = ({ subType, onDelete }: GridItemProps) => {
             py: "5px",
           }}
         >
-          <Contents subType={subType} data={[]} />
+          <Contents subType={subType} />
         </Stack>
 
         <Stack direction="row" sx={{ justifyContent: "flex-end" }}></Stack>

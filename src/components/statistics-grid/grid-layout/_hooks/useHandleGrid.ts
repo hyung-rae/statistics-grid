@@ -24,7 +24,7 @@ const useHandleGrid = () => {
     setLayout((preLayout) => {
       const merged = newLayout.map((newItem) => {
         const preItem = preLayout.find((item) => item.i === newItem.i)
-        return preItem ? { ...newItem, ...preItem } : newItem
+        return preItem ? { ...preItem, ...newItem } : newItem
       })
 
       return merged as CustomLayoutItem[]

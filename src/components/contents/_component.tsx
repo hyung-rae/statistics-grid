@@ -7,10 +7,8 @@ type ContentSubtypes = ContentSubType<
 
 interface ContentsProps {
   subType: ContentSubtypes
-  data: unknown
 }
 
-// 데이터도 조회 해야하자나?
 const Contents = ({ subType }: ContentsProps) => {
   const renderContent = (subType: ContentSubtypes) => {
     switch (subType) {

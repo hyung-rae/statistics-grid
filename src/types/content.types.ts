@@ -14,6 +14,7 @@ export type CustomLayoutItem = {
   [key in ContentType]: LayoutItem & {
     type: key
     subType: (typeof CONTENTS)[key][number]
+    apiUrl?: string
   }
 }[ContentType]
 

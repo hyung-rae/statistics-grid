@@ -51,7 +51,7 @@ const GridLayout = () => {
               <GridItem
                 {...item}
                 onDelete={() => onDeleteContent(item.i)}
-                onChangeType={onChangeContent}
+                onChangeContent={onChangeContent}
               />
             </Card>
           ))}

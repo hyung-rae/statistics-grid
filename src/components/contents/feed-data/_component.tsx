@@ -1,7 +1,10 @@
 import { Stack, Typography } from "@mui/material"
+import { useState } from "react"
 
 const FeedData = () => {
-  return (
+  const [data] = useState()
+
+  return data ? (
     <Stack
       justifyContent="center"
       gap={2.5}
@@ -18,6 +21,17 @@ const FeedData = () => {
           4 명 감소
         </Typography>
       </Stack>
+    </Stack>
+  ) : (
+    <Stack
+      sx={{
+        width: "100%",
+        height: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Typography fontSize={15}>조회할 통계를 선택해주세요.</Typography>
     </Stack>
   )
 }
