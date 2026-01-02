@@ -17,9 +17,8 @@ export const STATISTICS_LIST = {
   },
 
   distribution: {
-    total: 3,
+    total: 2,
     list: [
-      { id: "channel", name: "방문 유입채널 분포" },
       { id: "device", name: "기기별 접속률" },
       { id: "location", name: "지역별 접속률" },
     ],
@@ -52,5 +51,28 @@ export const FEED_STATISTICS = {
     value: 10,
     unit: "명",
     preValue: 14,
+  },
+}
+
+export const DISTRIBUTION_STATISTICS = {
+  device: {
+    label: "기기별 접속률",
+    total: 64,
+    list: [
+      { type: "PC", value: 24 },
+      { type: "Mobile", value: 34 },
+      { type: "etc", value: 6 },
+    ],
+  },
+  location: {
+    label: "지역별 접속률",
+    total: 78,
+    list: [
+      { type: "서울", value: 35 },
+      { type: "경기도", value: 20 },
+      { type: "부산", value: 12 },
+      { type: "인천", value: 6 },
+      { type: "etc", value: 5 },
+    ],
   },
 }

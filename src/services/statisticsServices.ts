@@ -10,3 +10,8 @@ export const getStatisticsFeed = async <P>(id: string): Promise<P> => {
   const { data } = await axiosInstance.get(`/statistics/feed/${id}`)
   return data
 }
+
+export const getStatisticsDistribution = async <P>(id: string): Promise<P> => {
+  const { data } = await axiosInstance.get(`/statistics/distribution/${id}`)
+  return data
+}

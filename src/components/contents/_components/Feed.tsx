@@ -1,8 +1,8 @@
-import Loading from "@/components/loading"
 import { getStatisticsFeed } from "@/services/statisticsServices"
 import { Stack, Typography } from "@mui/material"
 import { useQuery } from "@tanstack/react-query"
 import { useMemo } from "react"
+import NoData from "./NoData"
 
 type FeedStatisticsData = {
   label: string
@@ -45,16 +45,7 @@ const FeedData = ({ dataId }: { dataId?: string }) => {
       </Stack>
     </Stack>
   ) : (
-    <Stack
-      sx={{
-        width: "100%",
-        height: "100%",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      {isLoading ? <Loading /> : <Typography fontSize={15}>데이터가 없습니다.</Typography>}
-    </Stack>
+    <NoData isLoading={isLoading} />
   )
 }
 

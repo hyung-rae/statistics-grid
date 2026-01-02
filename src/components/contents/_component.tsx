@@ -1,6 +1,7 @@
 import type { ContentSubtypes, CustomLayoutItem } from "@/types"
 import { Stack } from "@mui/material"
 import FeedData from "./_components/Feed"
+import DistributionChart from "./_components/DistributionChart"
 
 interface ContentsProps {
   subType: ContentSubtypes
@@ -12,12 +13,15 @@ const renderContent = (subType: ContentSubtypes, dataId?: string) => {
   switch (subType) {
     case "feed":
       return <FeedData dataId={dataId} />
+
+    case "donut":
+    case "radialBar":
+    case "pie":
+      return <DistributionChart dataId={dataId} subType={subType} />
+
     case "line":
     case "bar":
     case "column":
-    case "pie":
-    case "donut":
-    case "circle":
     case "table":
       return (
         <Stack
