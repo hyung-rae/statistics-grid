@@ -34,8 +34,8 @@ const ConfirmDialog = ({
       <DialogContent>{content}</DialogContent>
 
       <DialogActions>
-        <Button onClick={close}>Cancel</Button>
-        <Button onClick={handleConfirm}>Ok</Button>
+        <Button onClick={close}>취소</Button>
+        <Button onClick={handleConfirm}>확인</Button>
       </DialogActions>
     </Dialog>
   )

@@ -1,23 +1,29 @@
-import type { ContentType, CustomLayoutItem } from "@/types"
-import { createContentId, getInitSubType } from "@/utils"
 import Box from "@mui/material/Box"
 import SpeedDial from "@mui/material/SpeedDial"
 import SpeedDialAction from "@mui/material/SpeedDialAction"
-import SpeedDialIcon from "@mui/material/SpeedDialIcon"
-import { ACTIONS, CONTENT_CONFIG } from "./_constants"
-import type { CreateItemButtonProps } from "./_types"
+import SettingsIcon from "@mui/icons-material/Settings"
+import { ACTIONS } from "./_constants"
+import type { SettingType } from "./_types"
 
-const CreateContentButton = ({ onAdd }: CreateItemButtonProps) => {
-  const handleClick = (type: ContentType) => {
-    const content = {
-      i: createContentId(),
-      w: CONTENT_CONFIG[type].minW,
-      h: CONTENT_CONFIG[type].minH,
-      type,
-      subType: getInitSubType(type),
-    } as CustomLayoutItem
+const SettingButton = ({
+  onSave,
+  onReset,
+}: {
+  onSave: () => void
+  onReset: () => void
+}) => {
+  const handleClick = (type: SettingType) => {
+    if (type === "save") {
+      onSave()
+      alert("save success")
+      return
+    }
 
-    onAdd(content)
+    if (type === "reset") {
+      onReset()
+      alert("reset success")
+      return
+    }
   }
 
   return (
@@ -33,9 +39,9 @@ const CreateContentButton = ({ onAdd }: CreateItemButtonProps) => {
       }}
     >
       <SpeedDial
-        ariaLabel="create content button"
-        sx={{ position: "absolute", bottom: 16, right: 16 }}
-        icon={<SpeedDialIcon />}
+        ariaLabel="setting button"
+        sx={{ position: "absolute", bottom: 16, left: 16 }}
+        icon={<SettingsIcon />}
       >
         {ACTIONS.map((action) => {
           const Icon = action.icon
@@ -57,4 +63,4 @@ const CreateContentButton = ({ onAdd }: CreateItemButtonProps) => {
   )
 }
 
-export default CreateContentButton
+export default SettingButton

@@ -9,6 +9,9 @@ export const CONTENTS = {
 
 export type ContentType = keyof typeof CONTENTS
 export type ContentSubType<T extends ContentType> = (typeof CONTENTS)[T][number]
+export type ContentSubtypes = ContentSubType<
+  "distribution" | "series" | "table" | "feed"
+>
 
 export type CustomLayoutItem = {
   [key in ContentType]: LayoutItem & {

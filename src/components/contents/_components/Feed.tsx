@@ -31,7 +31,7 @@ const FeedData = () => {
         alignItems: "center",
       }}
     >
-      <Typography fontSize={15}>조회할 통계를 선택해주세요.</Typography>
+      <Typography fontSize={15}>데이터가 없습니다.</Typography>
     </Stack>
   )
 }

@@ -1,11 +1,8 @@
-import ConfirmDialog from "@/components/confirm-dialog"
 import Contents from "@/components/contents"
-import SettingDialog from "@/components/setting-dialog"
 import { type CustomLayoutItem } from "@/types"
 import CloseIcon from "@mui/icons-material/Close"
 import DragIndicatorIcon from "@mui/icons-material/DragIndicator"
 import { Box, IconButton, Stack } from "@mui/material"
-import { useState } from "react"
 
 export type GridItemProps = CustomLayoutItem & {
   onDelete: () => void
@@ -15,25 +12,14 @@ export type GridItemProps = CustomLayoutItem & {
   ) => void
 }
 
-const GridItem = ({ subType, onDelete, onChangeContent }: GridItemProps) => {
-  const [openDeleteConfirm, setOpenDeleteConfirm] = useState(false)
-  const [openSettingDialog, setOpenSettingDialog] = useState(false)
-
+const GridItem = ({
+  apiUrl,
+  subType,
+  onDelete,
+  onChangeContent,
+}: GridItemProps) => {
   return (
     <>
-      <SettingDialog
-        open={openSettingDialog}
-        close={() => setOpenSettingDialog(false)}
-      />
-
-      <ConfirmDialog
-        title="Are you sure you want to delete this content?"
-        content="Once deleted, it cannot be recovered."
-        open={openDeleteConfirm}
-        close={() => setOpenDeleteConfirm(false)}
-        confirm={onDelete}
-      />
-
       <Box
         sx={{
           height: "100%",
@@ -55,7 +41,7 @@ const GridItem = ({ subType, onDelete, onChangeContent }: GridItemProps) => {
             <DragIndicatorIcon fontSize="inherit" />
           </IconButton>
 
-          <IconButton size="small" onClick={() => setOpenDeleteConfirm(true)}>
+          <IconButton size="small" onClick={onDelete}>
             <CloseIcon fontSize="inherit" />
           </IconButton>
         </Stack>
@@ -69,7 +55,11 @@ const GridItem = ({ subType, onDelete, onChangeContent }: GridItemProps) => {
             py: "5px",
           }}
         >
-          <Contents subType={subType} />
+          <Contents
+            subType={subType}
+            apiUrl={apiUrl}
+            onChangeContent={onChangeContent}
+          />
         </Stack>
 
         <Stack direction="row" sx={{ justifyContent: "flex-end" }}></Stack>

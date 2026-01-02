@@ -4,6 +4,7 @@ import { Box, Card } from "@mui/material"
 import ReactGridLayout from "react-grid-layout"
 import { GRID_COLS, GRID_PADDING } from "./_constants"
 import useHandleGrid from "./_hooks/useHandleGrid"
+import SettingButton from "@/components/setting-button"
 
 const GridLayout = () => {
   const {
@@ -17,6 +18,8 @@ const GridLayout = () => {
     onAddContent,
     onDeleteContent,
     onChangeContent,
+    saveLayout,
+    resetLayout,
   } = useHandleGrid()
 
   return (
@@ -30,6 +33,8 @@ const GridLayout = () => {
         scrollbarGutter: "stable",
       }}
     >
+      <SettingButton onSave={saveLayout} onReset={resetLayout} />
+
       <CreateContentButton onAdd={onAddContent} />
 
       {mounted && (

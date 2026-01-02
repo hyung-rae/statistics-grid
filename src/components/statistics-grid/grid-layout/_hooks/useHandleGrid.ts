@@ -7,9 +7,11 @@ import {
   type LayoutConstraint,
 } from "react-grid-layout/core"
 import { GRID_COLS, GRID_PADDING } from "../_constants"
+import { useLocalStorage } from "@/hooks"
 
 const useHandleGrid = () => {
-  const [layout, setLayout] = useState<CustomLayoutItem[]>([])
+  const { value, setValue } = useLocalStorage<CustomLayoutItem[]>("layout")
+  const [layout, setLayout] = useState<CustomLayoutItem[]>(value ?? [])
   const { width, containerRef, mounted } = useContainerWidth()
 
   const rowHeight = useMemo(() => {
@@ -36,10 +38,6 @@ const useHandleGrid = () => {
     content.x = layout.length % GRID_COLS
     content.y = Infinity
 
-    if (content.type === "feed") {
-      content.isResizable = false
-    }
-
     setLayout((pre) => [...pre, content])
   }
 
@@ -58,6 +56,14 @@ const useHandleGrid = () => {
     })
   }
 
+  const saveLayout = () => {
+    setValue(layout)
+  }
+
+  const resetLayout = () => {
+    setLayout(value ?? [])
+  }
+
   return {
     containerRef,
     mounted,
@@ -69,6 +75,8 @@ const useHandleGrid = () => {
     onAddContent,
     onDeleteContent,
     onChangeContent,
+    saveLayout,
+    resetLayout,
   }
 }
 

@@ -6,16 +6,16 @@ import type { Actions, ContentConfig } from "./_types"
 
 export const CONTENT_CONFIG: ContentConfig = {
   series: {
-    minW: 3,
-    minH: 2,
+    minW: 1,
+    minH: 1,
   },
   distribution: {
-    minW: 2,
-    minH: 2,
+    minW: 1,
+    minH: 1,
   },
   table: {
-    minW: 3,
-    minH: 2,
+    minW: 1,
+    minH: 1,
   },
   feed: {
     minW: 1,
