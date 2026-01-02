@@ -41,3 +41,8 @@ const useLocalStorage = <T = unknown>(key: string, initialValue?: T) => {
 }
 
 export default useLocalStorage
+export type UseLocalStorageReturn<T = unknown> = {
+  value: T | null
+  setValue: (newValue: T | null) => void
+  removeValue: () => void
+}

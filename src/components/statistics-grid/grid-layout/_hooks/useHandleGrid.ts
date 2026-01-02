@@ -1,11 +1,7 @@
 import type { CustomLayoutItem } from "@/types"
 import { useMemo, useState } from "react"
 import { useContainerWidth, type Layout } from "react-grid-layout"
-import {
-  gridBounds,
-  minMaxSize,
-  type LayoutConstraint,
-} from "react-grid-layout/core"
+import { gridBounds, minMaxSize, type LayoutConstraint } from "react-grid-layout/core"
 import { GRID_COLS, GRID_PADDING } from "../_constants"
 import { useLocalStorage } from "@/hooks"
 
@@ -45,10 +41,7 @@ const useHandleGrid = () => {
     setLayout((pre) => pre.filter((item) => item.i !== id))
   }
 
-  const onChangeContent = (
-    targetId: string,
-    updateInfo: Partial<CustomLayoutItem>
-  ) => {
+  const onChangeContent = (targetId: string, updateInfo: Partial<CustomLayoutItem>) => {
     setLayout((preLayout) => {
       return preLayout.map((item) =>
         item.i === targetId ? { ...item, ...updateInfo } : item
@@ -64,6 +57,10 @@ const useHandleGrid = () => {
     setLayout(value ?? [])
   }
 
+  const removeLayout = () => {
+    setLayout([])
+  }
+
   return {
     containerRef,
     mounted,
@@ -77,6 +74,7 @@ const useHandleGrid = () => {
     onChangeContent,
     saveLayout,
     resetLayout,
+    removeLayout,
   }
 }
 

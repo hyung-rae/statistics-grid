@@ -1,1 +1,56 @@
-export const STATISTICS_LIST = []
+export const STATISTICS_LIST = {
+  feed: {
+    total: 3,
+    list: [
+      { id: "totalVisit", name: "오늘 총 방문자 수" },
+      { id: "totalPageView", name: "오늘 총 페이지 방문 수" },
+      { id: "totalNewVisit", name: "오늘 총 신규 방문자 수" },
+    ],
+  },
+
+  series: {
+    total: 2,
+    list: [
+      { id: "salesAmount", name: "일별 매출액 추이" },
+      { id: "refundAmount", name: "일별 환불액 추이" },
+    ],
+  },
+
+  distribution: {
+    total: 3,
+    list: [
+      { id: "channel", name: "방문 유입채널 분포" },
+      { id: "device", name: "기기별 접속률" },
+      { id: "location", name: "지역별 접속률" },
+    ],
+  },
+
+  table: {
+    total: 2,
+    list: [
+      { id: "bestPageRank", name: "가장 많이 본 페이지" },
+      { id: "worstPageRank", name: "이탈률 가장 높은 페이지" },
+    ],
+  },
+}
+
+export const FEED_STATISTICS = {
+  totalVisit: {
+    label: "오늘 총 방문자 수",
+    value: 1234,
+    unit: "명",
+    preValue: 1200,
+  },
+  totalPageView: {
+    label: "오늘 총 페이지 방문 수",
+    value: 3300,
+    unit: "회",
+    preValue: 3400,
+  },
+  totalNewVisit: {
+    label: "오늘 총 신규 방문자 수",
+    value: 10,
+    unit: "명",
+    preValue: 14,
+  },
+}

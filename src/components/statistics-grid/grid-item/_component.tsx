@@ -13,7 +13,7 @@ export type GridItemProps = CustomLayoutItem & {
 }
 
 const GridItem = ({
-  apiUrl,
+  dataId,
   subType,
   onDelete,
   onChangeContent,
@@ -57,7 +57,7 @@ const GridItem = ({
         >
           <Contents
             subType={subType}
-            apiUrl={apiUrl}
+            dataId={dataId}
             onChangeContent={onChangeContent}
           />
         </Stack>

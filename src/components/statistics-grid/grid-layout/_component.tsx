@@ -1,10 +1,9 @@
-import CreateContentButton from "@/components/create-content-button"
+import SettingButton from "@/components/setting-button"
 import GridItem from "@/components/statistics-grid/grid-item"
 import { Box, Card } from "@mui/material"
 import ReactGridLayout from "react-grid-layout"
 import { GRID_COLS, GRID_PADDING } from "./_constants"
 import useHandleGrid from "./_hooks/useHandleGrid"
-import SettingButton from "@/components/setting-button"
 
 const GridLayout = () => {
   const {
@@ -20,6 +19,7 @@ const GridLayout = () => {
     onChangeContent,
     saveLayout,
     resetLayout,
+    removeLayout,
   } = useHandleGrid()
 
   return (
@@ -33,9 +33,12 @@ const GridLayout = () => {
         scrollbarGutter: "stable",
       }}
     >
-      <SettingButton onSave={saveLayout} onReset={resetLayout} />
-
-      <CreateContentButton onAdd={onAddContent} />
+      <SettingButton
+        onAdd={onAddContent}
+        onSave={saveLayout}
+        onReset={resetLayout}
+        onRemove={removeLayout}
+      />
 
       {mounted && (
         <ReactGridLayout
@@ -47,6 +50,10 @@ const GridLayout = () => {
             containerPadding: [GRID_PADDING, GRID_PADDING],
           }}
           dragConfig={{ enabled: true, handle: "#handle" }}
+          resizeConfig={{
+            enabled: true,
+            handles: ["sw", "se"],
+          }}
           constraints={constraints}
           style={{ minHeight: "100vh" }}
           onLayoutChange={onLayoutChange}

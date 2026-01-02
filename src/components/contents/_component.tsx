@@ -1,18 +1,17 @@
 import type { ContentSubtypes, CustomLayoutItem } from "@/types"
 import { Stack } from "@mui/material"
+import FeedData from "./_components/Feed"
 
 interface ContentsProps {
   subType: ContentSubtypes
-  apiUrl?: string
-  onChangeContent: (
-    targetId: string,
-    updateInfo: Partial<CustomLayoutItem>
-  ) => void
+  dataId?: string
+  onChangeContent: (targetId: string, updateInfo: Partial<CustomLayoutItem>) => void
 }
 
-const renderContent = (subType: ContentSubtypes) => {
+const renderContent = (subType: ContentSubtypes, dataId?: string) => {
   switch (subType) {
     case "feed":
+      return <FeedData dataId={dataId} />
     case "line":
     case "bar":
     case "column":
@@ -29,7 +28,7 @@ const renderContent = (subType: ContentSubtypes) => {
             alignItems: "center",
           }}
         >
-          {subType}
+          {subType} / {dataId}
         </Stack>
       )
     default:
@@ -37,8 +36,8 @@ const renderContent = (subType: ContentSubtypes) => {
   }
 }
 
-const Contents = ({ subType, apiUrl, onChangeContent }: ContentsProps) => {
-  return <div style={{ flex: 1, width: "100%" }}>{renderContent(subType)}</div>
+const Contents = ({ subType, dataId }: ContentsProps) => {
+  return <div style={{ flex: 1, width: "100%" }}>{renderContent(subType, dataId)}</div>
 }
 
 export default Contents
