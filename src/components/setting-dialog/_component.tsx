@@ -1,10 +1,7 @@
+import { contentsIconComponentMap } from "@/constants"
 import { getStatisticsList } from "@/services/statisticsServices"
-import type { ContentType, CustomLayoutItem } from "@/types"
+import type { ContentSubtypes, ContentType, CustomLayoutItem } from "@/types"
 import { createContentId, getInitSubType } from "@/utils"
-import BallotIcon from "@mui/icons-material/Ballot"
-import PieChartIcon from "@mui/icons-material/PieChart"
-import SsidChartIcon from "@mui/icons-material/SsidChart"
-import TableChartIcon from "@mui/icons-material/TableChart"
 import {
   Button,
   Dialog,
@@ -22,7 +19,7 @@ import {
   type SelectChangeEvent,
 } from "@mui/material"
 import { useQuery } from "@tanstack/react-query"
-import { useMemo, useState, type JSX } from "react"
+import { useMemo, useState } from "react"
 import Select from "../select"
 
 type SettingDialogProps = {
@@ -83,17 +80,13 @@ const SettingDialog = ({ open, close, handleAddContent }: SettingDialogProps) =>
           <Typography variant="body1">통계 유형</Typography>
 
           <CustomToggleButtonGroup exclusive color="primary" value={type} onChange={handleType}>
-            <ContentButton title="line, bar, column" value="series" icon={<SsidChartIcon />} />
+            <ContentButton title="line, bar, column" value="series" iconType="line" />
 
-            <ContentButton
-              title="pie, donut, circle"
-              value="distribution"
-              icon={<PieChartIcon />}
-            />
+            <ContentButton title="pie, donut, radialBar" value="distribution" iconType="pie" />
 
-            <ContentButton title="table" value="table" icon={<TableChartIcon />} />
+            <ContentButton title="table" value="table" iconType="table" />
 
-            <ContentButton title="feed" value="feed" icon={<BallotIcon />} />
+            <ContentButton title="feed" value="feed" iconType="feed" />
           </CustomToggleButtonGroup>
         </Stack>
 
@@ -122,15 +115,19 @@ export default SettingDialog
 const ContentButton = ({
   title,
   value,
-  icon,
+  iconType,
 }: {
   title: string
   value: ContentType
-  icon: JSX.Element
+  iconType: ContentSubtypes
 }) => {
+  const Icon = contentsIconComponentMap[iconType]
+
   return (
     <Tooltip followCursor placement="top" title={title}>
-      <ToggleButton value={value}>{icon}</ToggleButton>
+      <ToggleButton value={value}>
+        <Icon />
+      </ToggleButton>
     </Tooltip>
   )
 }
