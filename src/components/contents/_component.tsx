@@ -1,7 +1,8 @@
 import type { ContentSubtypes } from "@/types"
-import { Stack } from "@mui/material"
 import DistributionChart from "./_components/DistributionChart"
 import FeedData from "./_components/Feed"
+import SeriesChart from "./_components/SeriesChart"
+import TableData from "./_components/TableData"
 
 interface ContentsProps {
   subType: ContentSubtypes
@@ -21,26 +22,19 @@ const renderContent = (subType: ContentSubtypes, dataId?: string) => {
     case "line":
     case "bar":
     case "column":
+      return <SeriesChart dataId={dataId} subType={subType} />
+
     case "table":
-      return (
-        <Stack
-          sx={{
-            width: "100%",
-            height: "100%",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          {subType} / {dataId}
-        </Stack>
-      )
+      return <TableData />
     default:
       return null
   }
 }
 
 const Contents = ({ subType, dataId }: ContentsProps) => {
-  return <div style={{ flex: 1, width: "100%" }}>{renderContent(subType, dataId)}</div>
+  return (
+    <div style={{ flex: 1, width: "100%", height: "100%" }}>{renderContent(subType, dataId)}</div>
+  )
 }
 
 export default Contents

@@ -108,7 +108,16 @@ const DistributionChart = ({
   }
 
   return data ? (
-    <ReactApexChart options={options} series={series} type={subType} />
+    <div style={{ width: "100%", height: "100%" }}>
+      <ReactApexChart
+        key={subType}
+        options={options}
+        series={series}
+        type={subType}
+        width="100%"
+        height="100%"
+      />
+    </div>
   ) : (
     <NoData isLoading={isLoading} />
   )
