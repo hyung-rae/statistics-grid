@@ -1,12 +1,11 @@
-import type { ContentSubtypes, CustomLayoutItem } from "@/types"
+import type { ContentSubtypes } from "@/types"
 import { Stack } from "@mui/material"
-import FeedData from "./_components/Feed"
 import DistributionChart from "./_components/DistributionChart"
+import FeedData from "./_components/Feed"
 
 interface ContentsProps {
   subType: ContentSubtypes
   dataId?: string
-  onChangeContent: (targetId: string, updateInfo: Partial<CustomLayoutItem>) => void
 }
 
 const renderContent = (subType: ContentSubtypes, dataId?: string) => {
